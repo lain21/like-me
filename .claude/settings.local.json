@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(pg_isready -h localhost -p 5432 -U postgres)",
+      "Bash(psql -h localhost -U postgres -c '\\\\l')",
+      "Bash(timeout 4 node index.js)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(timeout 4 node -e \":*)",
+      "Bash(echo \"Exit: $?\")"
+    ]
+  }
+}
