@@ -40,6 +40,31 @@ app.post("/posts", async (req, res) => {
   }
 });
 
+app.put("/posts/like/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *",
+      [id]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al dar like al post" });
+  }
+});
+
+app.delete("/posts/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query("DELETE FROM posts WHERE id = $1", [id]);
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar el post" });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
 });
